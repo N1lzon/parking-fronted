@@ -1,65 +1,63 @@
 .parking-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
-  padding: 20px;
-  max-width: 800px;
+  gap: 12px;
+  padding: 10px 0;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .parking-space {
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  border: 3px solid transparent;
+  font-weight: 600;
   transition: transform 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .space-number {
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 2rem;
 }
 
 /* Estado: Libre (no reservado) */
 .parking-space.libre {
-  background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
-  color: #374151;
-  border-color: #9ca3af;
+  background: #e8e8e8;
+  color: #999;
+  border-color: #ddd;
 }
 
 /* Estado: Ocupado */
 .parking-space.ocupado {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  border-color: #dc2626;
+  background: #ffebee;
+  color: #e53935;
+  border-color: #ef5350;
 }
 
 /* Estado: Reservado (libre pero reservado) */
 .parking-space.reservado {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: white;
-  border-color: #f59e0b;
+  background: #fff8e1;
+  color: #f9a825;
+  border-color: #fbc02d;
 }
 
-/* Espacio asignado al usuario (resaltado en verde) */
+/* Espacio asignado al usuario */
 .parking-space.asignado {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #52c87a;
   color: white;
-  border-color: #059669;
-  animation: pulseGreen 1.5s ease-in-out infinite;
+  border-color: #42b86a;
   transform: scale(1.05);
+  animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes pulseGreen {
+@keyframes pulse {
   0%, 100% {
-    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 0 0 rgba(82, 200, 122, 0.4);
   }
   50% {
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.7);
+    box-shadow: 0 0 0 8px rgba(82, 200, 122, 0);
   }
 }
 
@@ -67,11 +65,10 @@
 @media (max-width: 768px) {
   .parking-grid {
     gap: 10px;
-    padding: 15px;
   }
   
   .space-number {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -82,6 +79,6 @@
   }
   
   .space-number {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }

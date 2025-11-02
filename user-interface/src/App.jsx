@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     loadEspacios();
-    // Actualizar espacios cada 5 segundos
     const interval = setInterval(loadEspacios, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -51,25 +50,25 @@ function App() {
 
   const handleEmployeeSubmit = async (ci) => {
     setLoading(true);
-    setShowEmployeeLogin(false);
     
     try {
-      // Verificar que el usuario existe
       const usuario = await verificarUsuarioReserva(ci);
       
       if (!usuario) {
+        setShowEmployeeLogin(false);
         setErrorMessage('CI no encontrado. Usted no está registrado como empleado.');
         setShowErrorModal(true);
         setLoading(false);
         return;
       }
 
-      // Solicitar espacio reservado
       const asignacion = await solicitarEspacioReservado(ci);
+      setShowEmployeeLogin(false);
       setEspacioAsignado(asignacion.espacio.numero_de_espacio);
       setShowAssignmentModal(true);
       await loadEspacios();
     } catch (error) {
+      setShowEmployeeLogin(false);
       if (error.response?.status === 404) {
         setErrorMessage('No hay espacios reservados disponibles en este momento.');
       } else {
@@ -86,77 +85,58 @@ function App() {
     setEspacioAsignado(null);
   };
 
-  // Verificar si hay espacios disponibles
   const espaciosLibresNormales = espacios.filter(e => e.estado === 'libre' && e.reservado === 'no').length;
   const espaciosLibresReservados = espacios.filter(e => e.estado === 'libre' && e.reservado === 'si').length;
 
   return (
     <div className="app">
       <div className="app-container">
-        <div className="header">
-          <h1>🚗 Sistema de Estacionamiento</h1>
-          <div className="subtitle">Bienvenido</div>
-        </div>
-
-        <div className="main-content">
-          <div className="info-panel">
-            <div className="info-item">
-              <div className="info-icon">🅿️</div>
-              <div className="info-text">
-                <div className="info-label">Espacios Disponibles</div>
-                <div className="info-value">{espaciosLibresNormales}</div>
-              </div>
+        <header className="header">
+          <h1>Sistema de Estacionamiento</h1>
+          <div className="stats-bar">
+            <div className="stat">
+              <span className="stat-value">{espaciosLibresNormales}</span>
+              <span className="stat-label">Disponibles</span>
             </div>
-            <div className="info-item">
-              <div className="info-icon">⭐</div>
-              <div className="info-text">
-                <div className="info-label">Espacios Reservados</div>
-                <div className="info-value">{espaciosLibresReservados}</div>
-              </div>
+            <div className="stat-divider"></div>
+            <div className="stat">
+              <span className="stat-value">{espaciosLibresReservados}</span>
+              <span className="stat-label">Reservados</span>
             </div>
           </div>
+        </header>
 
-          <div className="button-container">
-            <button
-              onClick={handlePedirLugar}
-              disabled={loading || espaciosLibresNormales === 0}
-              className="btn-main btn-request"
-            >
-              {loading ? (
-                <>
-                  <span className="spinner"></span>
-                  Procesando...
-                </>
-              ) : (
-                <>
-                  <span className="btn-icon">🅿️</span>
-                  Pedir Lugar
-                </>
-              )}
-            </button>
+        <main className="main-content">
+          <button
+            onClick={handlePedirLugar}
+            disabled={loading || espaciosLibresNormales === 0}
+            className="btn-primary"
+          >
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                <span>Procesando...</span>
+              </>
+            ) : (
+              'Solicitar Lugar'
+            )}
+          </button>
 
-            <button
-              onClick={() => setShowEmployeeLogin(true)}
-              disabled={loading || espaciosLibresReservados === 0}
-              className="btn-main btn-employee"
-            >
-              <span className="btn-icon">👤</span>
-              Soy Empleado
-            </button>
+          <button
+            onClick={() => setShowEmployeeLogin(true)}
+            disabled={loading || espaciosLibresReservados === 0}
+            className="btn-secondary"
+          >
+            Soy Docente
+          </button>
 
-            <button
-              disabled={true}
-              className="btn-main btn-help"
-            >
-              <span className="btn-icon">❓</span>
-              Pedir Ayuda
-            </button>
-          </div>
-        </div>
-
-        <div className="footer">
-          Sistema de Gestión de Estacionamiento v1.0
-        </div>
+          <button
+            disabled={true}
+            className="btn-help"
+          >
+            Solicitar Ayuda
+          </button>
+        </main>
       </div>
 
       {showAssignmentModal && (

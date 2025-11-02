@@ -4,28 +4,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 3000;
   padding: 20px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .error-modal {
   background: white;
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 450px;
+  border-radius: 16px;
+  padding: 50px 40px;
+  max-width: 500px;
   width: 100%;
   text-align: center;
-  animation: bounceIn 0.5s ease;
+  animation: bounceIn 0.4s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes bounceIn {
   0% {
-    transform: scale(0.5);
+    transform: scale(0.8);
     opacity: 0;
   }
   50% {
@@ -38,22 +44,15 @@
 }
 
 .error-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 20px;
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 30px;
+  background: #ff6b4a;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  animation: shake 0.5s ease;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
 }
 
 .error-icon svg {
@@ -63,34 +62,39 @@
 }
 
 .error-modal h3 {
-  color: #1f2937;
+  color: #1a1a1a;
   font-size: 2rem;
+  font-weight: 700;
   margin: 0 0 20px 0;
+  letter-spacing: -0.5px;
 }
 
 .error-modal p {
-  color: #4b5563;
-  font-size: 1.2rem;
+  color: #666;
+  font-size: 1.15rem;
   line-height: 1.6;
-  margin: 0 0 30px 0;
+  margin: 0 0 35px 0;
 }
 
 .btn-ok {
   width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  padding: 20px;
+  background: #1a1a1a;
   color: white;
   border: none;
   border-radius: 12px;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-ok:hover {
+  background: #333;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .btn-ok:active {
@@ -99,7 +103,17 @@
 
 @media (max-width: 480px) {
   .error-modal {
-    padding: 30px;
+    padding: 40px 30px;
+  }
+  
+  .error-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .error-icon svg {
+    width: 45px;
+    height: 45px;
   }
   
   .error-modal h3 {
@@ -107,6 +121,6 @@
   }
   
   .error-modal p {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }

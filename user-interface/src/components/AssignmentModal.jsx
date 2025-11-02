@@ -3,10 +3,9 @@ import ParkingGrid from './ParkingGrid';
 import './AssignmentModal.css';
 
 const AssignmentModal = ({ espacios, numeroEspacioAsignado, onClose }) => {
-  const [timeLeft, setTimeLeft] = useState(60); // 60 segundos
+  const [timeLeft, setTimeLeft] = useState(60);
 
   useEffect(() => {
-    // Countdown timer
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -23,18 +22,20 @@ const AssignmentModal = ({ espacios, numeroEspacioAsignado, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+        <button onClick={onClose} className="btn-close-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
         <div className="modal-header">
-          <h2>¡Espacio Asignado!</h2>
-          <button onClick={onClose} className="btn-close">✕</button>
+          <h2>Espacio Asignado</h2>
+          <div className="assigned-number">{numeroEspacioAsignado}</div>
+          <p className="instruction">Dirígete al espacio marcado</p>
         </div>
 
-        <div className="assigned-info">
-          <div className="info-label">Tu espacio es:</div>
-          <div className="info-number">{numeroEspacioAsignado}</div>
-          <div className="info-text">Dirígete al espacio marcado en verde</div>
-        </div>
-
-        <div className="grid-container">
+        <div className="grid-section">
           <ParkingGrid 
             espacios={espacios} 
             espacioAsignado={numeroEspacioAsignado}
@@ -42,12 +43,9 @@ const AssignmentModal = ({ espacios, numeroEspacioAsignado, onClose }) => {
         </div>
 
         <div className="modal-footer">
-          <div className="timer">
-            Esta ventana se cerrará en {timeLeft}s
+          <div className="timer-info">
+            Cierre automático en <strong>{timeLeft}s</strong>
           </div>
-          <button onClick={onClose} className="btn-close-modal">
-            Cerrar
-          </button>
         </div>
       </div>
     </div>

@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ErrorModal.css';
 
 const ErrorModal = ({ message, onClose }) => {
+  const [timeLeft, setTimeLeft] = useState(5); // 5 segundos
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          onClose();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [onClose]);
+
   return (
     <div className="error-overlay">
       <div className="error-modal">
@@ -17,7 +33,7 @@ const ErrorModal = ({ message, onClose }) => {
         <p>{message}</p>
         
         <button onClick={onClose} className="btn-ok">
-          Entendido
+          Entendido ({timeLeft}s)
         </button>
       </div>
     </div>
