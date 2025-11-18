@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import Reports from './components/Reports';
 import { loginAdmin } from './services/api';
 import './App.css';
 
@@ -31,7 +32,7 @@ function App() {
       case 'users':
         return <div className="placeholder-view">Vista de Usuarios (Próximamente)</div>;
       case 'reports':
-        return <div className="placeholder-view">Vista de Reportes (Próximamente)</div>;
+        return <Reports />;
       case 'settings':
         return <div className="placeholder-view">Vista de Configuración (Próximamente)</div>;
       default:
